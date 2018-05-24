@@ -9,7 +9,9 @@ RUN wget https://s3-us-west-1.amazonaws.com/exp.alpacadb.com/talib/talib_0.4.0-1
 RUN echo "usr/local/lib" >> /etc/ld.so.conf && /sbin/ldconfig
 
 ADD Pipfile Pipfile.lock /work/
-RUN cd /work && pipenv install
+RUN cd /work && pipenv install --system
 
-ADD junalgo/ /work/
+ADD junalgo /work/junalgo
+ENV PYTHONPATH /work
 WORKDIR /work
+CMD ["python", "junalgo/main.py"]

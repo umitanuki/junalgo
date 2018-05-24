@@ -11,3 +11,5 @@ def _dry_run_submit(*args, **kwargs):
 
 def set_dry_run():
     api.submit_order = _dry_run_submit
+
+api.set_dry_run = set_dry_run

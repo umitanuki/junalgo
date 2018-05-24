@@ -51,12 +51,14 @@ def run():
     current_df = bars.get('SPY')
     current_strategies = get_current_strategies()
     if not current_strategies:
-        current_strategies = reset_strategies()
+        current_strategies = reset_strategies(current_df)
     try:
         position = api.get_position('SPY')
     except BaseException:
         position = None
     account = api.get_account()
+
+    logger.info('current strategies == {}'.format(current_strategies))
 
     for st in current_strategies:
         out_df = st.calc(current_df)
@@ -88,6 +90,7 @@ def run():
 
 
 def main():
+    api.set_dry_run()
     logging.info('start running')
     done = None
     while True:
